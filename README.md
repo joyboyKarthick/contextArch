@@ -62,7 +62,7 @@ your-project/
 
 ## Quick Start
 
-1. Clone this repo (or just grab `project_setup.md`)
+1. Clone this repo (or just grab `project_setup.md` + `project_setup.sh`)
 2. Open your project in Cursor
 3. Tell the agent:
 
@@ -78,7 +78,9 @@ Every session after that starts with full context already loaded. Zero repetitio
 
 | File | For whom | Purpose |
 |------|----------|---------|
-| [`project_setup.md`](project_setup.md) | **The AI agent** | Self-contained system: architecture explanation, all templates, setup script, agent instructions, enterprise patterns. Load this into your agent. |
+| [`project_setup.md`](project_setup.md) | **The AI agent** | Architecture explanation, all templates, agent instructions. Load this into your agent. |
+| [`project_setup.sh`](project_setup.sh) | **The AI agent** | Setup script that creates the folder structure and template files. Run by the agent during setup. |
+| [`project_setup_enterprise.md`](project_setup_enterprise.md) | **The AI agent** | Enterprise scaling patterns (task archive, cross-cutting groups, domain-scoped lessons, concurrent branching). Referenced when needed. |
 | [`README.md`](README.md) | **You** | This file. Explains what ContextArch is and how to use it. |
 
 ---
@@ -103,12 +105,13 @@ The single entry point. Cursor loads this every session automatically. Contains 
 
 `docs/tasks/overview.md` lists all task groups and cross-group blocking status.
 
-Each group has `overview.md` (status table + mermaid dependency graph) and task docs. Each task doc includes:
+Each group has `overview.md` (status table + inline tasks + optional dependency graph) and task docs. Small 1-2 step tasks live inline in the group overview; larger tasks get their own file. Each task doc includes:
 
 - **Context Scope** -- "Read X. Ignore Y." (prevents the agent from reading irrelevant docs)
 - **Tools & Environment** -- MCP servers, CLI tools, agent type, browser URLs, scripts, env vars
 - **Steps with verification** -- each step has a verify command and expected output
-- **Blocked by** -- explicit dependency on other tasks
+- **Blocked by** -- explicit dependency on other tasks (using `filename.md` format)
+- **Files Modified** -- filled on completion as an audit trail
 
 ### Tier 3: `docs/ref/` (on-demand reference)
 
@@ -129,8 +132,8 @@ You're building **ShopAPI** -- Rust backend, React dashboard, PostgreSQL.
 ```markdown
 # Product Catalog CRUD
 
-**Status:** In progress
 **Blocked by:** none
+**Group:** backend
 
 ## Context Scope
 
@@ -153,6 +156,10 @@ Ignore: docs/arch/ui.md, everything in docs/ref/
 
 3. [ ] Add REST endpoints (POST/GET/PUT/DELETE /api/products)
    - Verify: `cargo test routes::products`
+
+## Files Modified
+
+(Filled on completion.)
 ```
 
 **6 months later:** 12 domains, 80+ tasks. The cursor rule is still ~80 lines. `payments/` split into sub-docs. Completed tasks archived. Domain-scoped lessons auto-load via cursor rule globs. Nothing was restructured.
@@ -161,7 +168,7 @@ Ignore: docs/arch/ui.md, everything in docs/ref/
 
 ## Enterprise Scaling
 
-The base system handles solo and small-team projects out of the box. For larger projects, `project_setup.md` includes 4 additive patterns -- activate when you hit the threshold, ignore until then:
+The base system handles solo and small-team projects out of the box. For larger projects, [`project_setup_enterprise.md`](project_setup_enterprise.md) includes 4 additive patterns -- activate when you hit the threshold, ignore until then:
 
 | Pattern | Activate when | What it does |
 |---------|--------------|--------------|
