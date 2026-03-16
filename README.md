@@ -231,4 +231,4 @@ This is how the system scales from a weekend project to an enterprise monolith w
 
 ## License
 
-MIT
+Apache 2.0
