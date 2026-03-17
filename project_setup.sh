@@ -125,16 +125,17 @@ Every docs folder has an overview.md. Always read it first.
 
 1. **overview.md first** — When entering any docs folder, read its overview.md first. If you create, rename, or delete any file in the folder, update overview.md immediately.
 2. **Plan proportionally** — For 1-2 step tasks, add an inline task to the group overview.md. For 3+ step tasks, create a full task doc in the group folder. Promote an inline task to a full task doc if it needs Context Scope, gets blocked by another task, or grows beyond 2 steps.
-3. **Check dependencies** — Before starting a task, read its "Blocked by" field and the group overview.md.
-4. **Verify before done** — Run the verification command in the task doc. Never mark complete without proof.
-5. **Update status** — Group overview.md is the single source of truth for task status. Follow the Post-Task Checklist after completing any task.
-6. **Context scope** — Read ONLY what the task doc's "Context Scope" section says.
-7. **Use task tools** — Check the task doc's "Tools & Environment" section. Prefer MCP over shell.
-8. **After corrections** — Add to docs/ref/lessons.md. If the pattern recurs, promote it here.
-9. **Architecture changes** — Update the relevant docs/arch/ file and its overview.md if structure changed.
-10. **Subagents** — One task per subagent. Use the agent type from "Tools & Environment" if specified.
-11. **Simplicity** — Minimal changes. Find root causes. No temporary hacks.
-12. **Validate overviews** — After adding, removing, or moving any doc, run `bash docs/validate.sh` to ensure overview.md files are in sync.
+3. **Test-driven by default** — Follow test-driven design: failing test first, then implement. If the user prefers another approach, follow their preference.
+4. **Check dependencies** — Before starting a task, read its "Blocked by" field and the group overview.md.
+5. **Verify before done** — Run the verification command in the task doc. Never mark complete without proof.
+6. **Update status** — Group overview.md is the single source of truth for task status. Follow the Post-Task Checklist after completing any task.
+7. **Context scope** — Read ONLY what the task doc's "Context Scope" section says.
+8. **Use task tools** — Check the task doc's "Tools & Environment" section. Prefer MCP over shell.
+9. **After corrections** — Add to docs/ref/lessons.md. If the pattern recurs, promote it here.
+10. **Architecture changes** — Update the relevant docs/arch/ file and its overview.md if structure changed.
+11. **Subagents** — One task per subagent. Use the agent type from "Tools & Environment" if specified.
+12. **Simplicity** — Minimal changes. Find root causes. No temporary hacks.
+13. **Validate overviews** — After adding, removing, or moving any doc, run `bash docs/validate.sh` to ensure overview.md files are in sync.
 
 ## Post-Task Checklist
 

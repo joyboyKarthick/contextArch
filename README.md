@@ -89,7 +89,7 @@ Every session after that starts with full context already loaded. Zero repetitio
 
 ### Tier 0: `.cursor/rules/project.mdc` (auto-loaded)
 
-The single entry point. Cursor loads this every session automatically. Contains project identity (name, tech stack, structure), build/test/lint commands, navigation pointers to the three overview.md files, agent behavioral rules, and active lessons.
+The single entry point. Cursor loads this every session automatically. Contains project identity (name, tech stack, structure), build/test/lint commands, navigation pointers to the three overview.md files, agent behavioral rules (including test-driven design by default—user preference overrides), and active lessons.
 
 **No routing table.** The cursor rule says "read `docs/arch/overview.md`" -- the overview handles routing. The cursor rule stays ~80 lines forever, regardless of how many domains the project has.
 
@@ -110,6 +110,8 @@ Each group has `overview.md` (status table + inline tasks + optional dependency 
 - **Context Scope** -- "Read X. Ignore Y." (prevents the agent from reading irrelevant docs)
 - **Tools & Environment** -- MCP servers, CLI tools, agent type, browser URLs, scripts, env vars
 - **Steps with verification** -- each step has a verify command and expected output
+- **Acceptance criteria (mandatory)** -- every step must have a **Verify** command and **Expected** outcome; no task is complete without passing verification
+- **Test-driven by default** -- agent follows TDD (failing test/verify first, then implement); if you prefer another approach, say so and the agent follows that
 - **Blocked by** -- explicit dependency on other tasks (using `filename.md` format)
 - **Files Modified** -- filled on completion as an audit trail
 

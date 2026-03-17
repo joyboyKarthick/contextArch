@@ -118,6 +118,8 @@ docs/tasks/
 
 **Task docs** include a "Blocked by" field referencing prerequisite tasks by relative path.
 
+**Acceptance criteria are mandatory.** Every task doc and every step must have explicit verification: a **Verify** command and an **Expected** outcome. Do not create or complete a task without these. Inline tasks in the group overview must also include a Verify command.
+
 **Navigation:** Agent reads group overview.md to find the right task, then reads the task doc. 2 levels max.
 
 ### Tier 3: `docs/ref/`
@@ -186,17 +188,18 @@ Every docs folder has an `overview.md`. Always read it first -- it routes you to
 ## Agent Rules
 
 1. **overview.md first** — When entering any docs folder, read its `overview.md` first. If you create, rename, or delete any file in the folder, update overview.md immediately.
-2. **Plan proportionally** — For 1-2 step tasks, add an inline task to the group overview.md. For 3+ step tasks, create a full task doc in the group folder. Promote an inline task to a full task doc if it needs Context Scope, gets blocked by another task, or grows beyond 2 steps.
-3. **Check dependencies** — Before starting a task, read its "Blocked by" field. If prerequisites are not Done, do not start. Read the group overview.md for the dependency graph.
-4. **Verify before done** — Run the verification command in the task doc. Never mark complete without proof.
-5. **Update status** — Group overview.md is the single source of truth for task status. Follow the Post-Task Checklist after completing any task.
-6. **Context scope** — Read ONLY what the task doc's "Context Scope" section says. Do not read unrelated docs.
-7. **Use task tools** — Check the task doc's "Tools & Environment" section. Use the specified MCP servers, CLI tools, agent types, browser, scripts, and env vars. Prefer MCP tools over raw shell commands when an MCP server is listed.
-8. **After corrections** — Add to `docs/ref/lessons.md`. If the pattern recurs, promote it to a rule here.
-9. **Architecture changes** — If the task changes design/modules/API/data flow, update the relevant `docs/arch/` file and its overview.md if the structure changed.
-10. **Subagents** — One task per subagent. Use the agent type from "Tools & Environment" if specified.
-11. **Simplicity** — Minimal changes. Find root causes. No temporary hacks.
-12. **Validate overviews** — After adding, removing, or moving any doc, run `bash docs/validate.sh` to ensure overview.md files are in sync.
+2. **Plan proportionally** — For 1-2 step tasks, add an inline task to the group overview.md. For 3+ step tasks, create a full task doc in the group folder. Promote an inline task to a full task doc if it needs Context Scope, gets blocked by another task, or grows beyond 2 steps. Every task (inline or full doc) must have acceptance criteria: a Verify command and Expected outcome per step.
+3. **Test-driven by default** — Follow test-driven design: write a failing test (or verification) first, then implement to pass it. If the user prefers a different approach (e.g. implement then test, or skip tests for this task), follow their preference.
+4. **Check dependencies** — Before starting a task, read its "Blocked by" field. If prerequisites are not Done, do not start. Read the group overview.md for the dependency graph.
+5. **Verify before done** — Run the verification command in the task doc. Never mark complete without proof. Acceptance criteria (Verify + Expected) are mandatory for every step.
+6. **Update status** — Group overview.md is the single source of truth for task status. Follow the Post-Task Checklist after completing any task.
+7. **Context scope** — Read ONLY what the task doc's "Context Scope" section says. Do not read unrelated docs.
+8. **Use task tools** — Check the task doc's "Tools & Environment" section. Use the specified MCP servers, CLI tools, agent types, browser, scripts, and env vars. Prefer MCP tools over raw shell commands when an MCP server is listed.
+9. **After corrections** — Add to `docs/ref/lessons.md`. If the pattern recurs, promote it to a rule here.
+10. **Architecture changes** — If the task changes design/modules/API/data flow, update the relevant `docs/arch/` file and its overview.md if the structure changed.
+11. **Subagents** — One task per subagent. Use the agent type from "Tools & Environment" if specified.
+12. **Simplicity** — Minimal changes. Find root causes. No temporary hacks.
+13. **Validate overviews** — After adding, removing, or moving any doc, run `bash docs/validate.sh` to ensure overview.md files are in sync.
 
 ## Post-Task Checklist
 
@@ -319,6 +322,8 @@ Ignore: {everything else, or specific areas to skip}
 {3-5 lines: what this task does, why it exists, what is in/out of scope.}
 
 ## Steps
+
+> **Acceptance criteria are mandatory.** Every step must have a Verify command and Expected outcome. Do not add a step without both.
 
 1. [ ] {Step title}
    - {What to do}
@@ -488,6 +493,6 @@ Activate these when you hit the thresholds described there.
 4. **Context scoping** — Each task doc says "Read X. Ignore Y." at the top.
 5. **Light grouping** — Tasks grouped by domain (2 levels max). Each group has a tiny overview.md with status + dependency graph.
 6. **Dependency tracking** — Group overview.md status table and "Blocked by" column are the primary dependency tracker. An optional mermaid graph can be added for complex non-linear groups. Top-level overview.md shows cross-group blocking. Task docs have "Blocked by" for explicit prerequisites.
-7. **Verification embedded** — Each task step has its own verify command. No separate acceptance file.
+7. **Acceptance criteria mandatory** — Every task and every step must have a Verify command and Expected outcome. No separate acceptance file; criteria are embedded per step. Do not mark a task complete without passing verification.
 8. **Lessons that enforce** — Recurring lessons become cursor rules (auto-loaded), not a file the agent might skip.
 9. **Grow organically** — Start with project.mdc and 1 arch doc. Add domains, groups, and sub-docs as the project grows. No upfront ceremony, no structural rewrites.
